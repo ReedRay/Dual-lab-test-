@@ -51,7 +51,7 @@ public:
 		comp_name = comp;
 	}
 	friend void checkHour(vector<Overall> &data);
-	friend void GrottySucks(vector<Overall>& data);
+	friend void MainLogic(vector<Overall>& data);
 	friend void mySort(vector<Overall>& data);
 	friend bool compare(Overall it1, Overall it2);
 }; 
@@ -101,15 +101,15 @@ void checkHour(vector<Overall> &data) //
 void print(vector<Overall>& myClass)  //ф-ия записи в файл
 {
 
-	bool GrottySucks2 = false;
+	bool GrottyCheck = false;
 	fstream fileToWrite("D:\\MyProjects\\vs\\test\\fout.txt");   //Тут менять путь для файла!
 	for (auto it = myClass.begin(); it != myClass.end(); it++)
 	{
 		
-		if (myClass.begin()->GetCompName()!="Grotty"&&it->GetCompName() == "Grotty" && GrottySucks2 == false) //отступ для грути
+		if (myClass.begin()->GetCompName()!="Grotty"&&it->GetCompName() == "Grotty" && GrottyCheck == false) //отступ для грути
 		{
 			fileToWrite << "\n";
-			GrottySucks2 = true;    
+			GrottyCheck = true;    
 		}
 		fileToWrite << it->GetCompName()<<' ';
 		fileToWrite << it->GetDepTime() << ' ';
@@ -120,7 +120,7 @@ void print(vector<Overall>& myClass)  //ф-ия записи в файл
 	fileToWrite.close();
 }
 
-void GrottySucks(vector<Overall> &data) //выборка объектов и их удаление
+void MainLogic(vector<Overall> &data) 
 {
 	
 	auto it = data.begin();
@@ -213,14 +213,14 @@ void mySort(vector<Overall>& data)
 		it->depTime = dhour + dmin;
 
 	}
-	sort(begin(data), end(data), [](Overall x1, Overall x2) {return compare(x1,x2); }); //вышла очень странная сортировка:)
+	sort(begin(data), end(data), [](Overall x1, Overall x2) {return compare(x1,x2); }); //
 
 }
  
 int main() 
 {
 	fstream inputFile; //Файл для чтения 
-	inputFile.open("hello.txt");
+	inputFile.open("fin.txt");
 	vector<string> data;
 	string buffer;
 	vector<Overall> myOver;
@@ -232,7 +232,7 @@ int main()
 	
 	Fill(data, myOver);
 	checkHour(myOver);
-	GrottySucks(myOver);
+	MainLogic(myOver);
 	
 	mySort(myOver);
 	print(myOver);
